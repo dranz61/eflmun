@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Committees | EFLMUN’26</title>
+    <style>
+        :root { --bg: #000000; --surface: #1c1c1e; --text-primary: #f5f5f7; --text-secondary: #86868b; --accent: #6C63FF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg); color: var(--text-primary); padding-top: 80px; }
+
+        /* NAVBAR */
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(28, 28, 30, 0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .brand { font-weight: 700; font-size: 1.3rem; color: white; text-decoration: none;}
+        .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+        .nav-links li a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: 0.3s; }
+        .nav-links li a:hover, .nav-links li a.active { color: white; }
+        .apply-btn-sm { background: rgba(255,255,255,0.15); color: white; padding: 8px 24px; border-radius: 30px; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
+
+        .page-header { text-align: center; padding: 60px 20px 40px; }
+        .page-header h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 15px; }
+        .page-header p { color: var(--text-secondary); font-size: 1.2rem; }
+
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; padding: 0 6% 100px; max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--surface); border-radius: 30px; padding: 50px 30px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); background: #222226; }
+        .logo-wrapper { width: 140px; height: 140px; margin-bottom: 30px; }
+        .logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+        .card h3 { font-size: 1.8rem; margin-bottom: 12px; color: white; font-weight: 700; }
+        .tag { font-size: 0.75rem; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; font-weight: 800; text-transform: uppercase; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-content { background: #1c1c1e; width: 90%; max-width: 600px; border-radius: 25px; padding: 40px; border: 1px solid rgba(255,255,255,0.1); text-align: center; transform: translateY(20px); transition: transform 0.3s ease; }
+        .modal-active { display: flex; opacity: 1; } .modal-active .modal-content { transform: translateY(0); }
+        .close-btn { position: absolute; top: 20px; right: 20px; color: white; cursor: pointer; font-weight: bold; width: 30px; height: 30px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;}
+
+        /* MOBİL */
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001;}
+        .bar { width: 25px; height: 3px; background-color: white; border-radius: 2px; }
+        @media (max-width: 768px) {
+            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--surface); flex-direction: column; justify-content: center; transition: 0.4s; z-index: 1000; box-shadow: -10px 0 30px black;}
+            .nav-links.active { right: 0; }
+            .hamburger { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="brand">EFLMUN’26</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="committees.html" class="active">Committees</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-header">
+        <h1>Committees</h1>
+        <p>Click on a committee to view details.</p>
+    </div>
+
+    <div class="grid">
+        <div class="card" onclick="openModal('DISEC', 'Disarmament and International Security', 'Agenda Item: Coming Soon...')">
+            <div class="logo-wrapper"><img src="https://i.ibb.co/jPqbw4Jg/JPEG-g-r-nt-s.jpg" alt="DISEC"></div>
+            <span class="tag">Security</span>
+            <h3>DISEC</h3>
+        </div>
+        <div class="card" onclick="openModal('SPECPOL', 'Special Political and Decolonization', 'Agenda Item: Coming Soon...')">
+            <div class="logo-wrapper"><img src="https://i.ibb.co/nNCd87z5/JPEG-g-r-nt-s.jpg" alt="SPECPOL"></div>
+            <span class="tag">Political</span>
+            <h3>SPECPOL</h3>
+        </div>
+        <div class="card" onclick="openModal('FCC', 'Futuristic Crisis Committee', 'Agenda Item: Coming Soon...')">
+            <div class="logo-wrapper"><img src="https://i.ibb.co/mVKSqk22/JPEG-g-r-nt-s.jpg" alt="FCC"></div>
+            <span class="tag" style="color: #ff4081;">Crisis</span>
+            <h3>FCC</h3>
+        </div>
+        <div class="card" onclick="openModal('UN WOMEN', 'Gender Equality and Empowerment', 'Agenda Item: Coming Soon...')">
+            <div class="logo-wrapper"><img src="https://i.ibb.co/23YLpPcD/JPEG-g-r-nt-s.jpg" alt="UN Women"></div>
+            <span class="tag">Human Rights</span>
+            <h3>UN Women</h3>
+        </div>
+        <div class="card" onclick="openModal('WHO', 'World Health Organization', 'Agenda Item: Coming Soon...')">
+            <div class="logo-wrapper"><img src="https://i.ibb.co/C3jVNDY8/JPEG-g-r-nt-s.jpg" alt="WHO"></div>
+            <span class="tag">Health</span>
+            <h3>WHO</h3>
+        </div>
+        <div class="card" onclick="openModal('NATO', 'North Atlantic Treaty Organization', 'Agenda Item: Coming Soon...')">
+            <div class="logo-wrapper"><img src="https://i.ibb.co/GQ0DR1vY/JPEG-g-r-nt-s.jpg" alt="NATO"></div>
+            <span class="tag">Defense</span>
+            <h3>NATO</h3>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="committeeModal">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal()">✕</div>
+            <h2 id="modalTitle" style="margin-bottom: 10px; color: #6C63FF;"></h2> <h4 id="modalSubtitle" style="margin-bottom: 20px; color: #aaa; font-weight: 400;"></h4> <p id="modalDesc" style="color: #d1d1d6; line-height: 1.6;"></p> </div>
+    </div>
+
+    <script>
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+
+        function openModal(title, subtitle, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalSubtitle').innerText = subtitle;
+            document.getElementById('modalDesc').innerText = desc;
+            
+            const m = document.getElementById('committeeModal');
+            m.style.display = 'flex';
+            setTimeout(() => { m.classList.add('modal-active'); }, 10);
+        }
+
+        function closeModal() {
+            const m = document.getElementById('committeeModal');
+            m.classList.remove('modal-active');
+            setTimeout(() => { m.style.display = 'none'; }, 300);
+        }
+        
+        window.onclick = function(e) { if(e.target==document.getElementById('committeeModal')) closeModal(); }
+    </script>
+</body>
+</html>
